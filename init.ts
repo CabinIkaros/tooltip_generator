@@ -36,8 +36,8 @@ function copyFiles() {
 			fs.copyFileSync(filePath, resultPath);
 			console.log(`Not found, languages.ts copied to ${resultPath} folder`);
 		}
-		filePath = __dirname + "/languages.js";
-		resultPath = resourcePath + "/languages.js";
+		filePath = __dirname + "/languages.ts";
+		resultPath = resourcePath + "/languages.ts";
 		console.log(`Checking if languages.js exsts in ${filePath}`)
 		if (fs.existsSync(resultPath))
 		{
@@ -65,9 +65,9 @@ function copyFiles() {
 			{
 				fs.copyFileSync(dirPath + "/localizationData.ts", resultPath + "/localizationData.ts");
 			}
-			if (!fs.existsSync(resultPath + "/localizationData.js")) 
+			if (!fs.existsSync(resultPath + "/localizationData.ts")) 
 			{
-				fs.copyFileSync(dirPath + "/localizationData.js", resultPath + "/localizationData.js");
+				fs.copyFileSync(dirPath + "/localizationData.ts", resultPath + "/localizationData.ts");
 			}
 		}
 	}
@@ -92,7 +92,7 @@ function changeImports()
 		})
 	}
 
-	const compilerJSFilePath = __dirname + "/localizationCompiler.js";
+	const compilerJSFilePath = __dirname + "/localizationCompiler.ts";
 
 	if (fs.existsSync(compilerJSFilePath))
 	{
