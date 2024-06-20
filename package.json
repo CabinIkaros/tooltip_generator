@@ -40,10 +40,9 @@
     "~generator": "node_modules/@cabin-icarus/tooltip_generator"
   },
   "scripts": {
-    "postinstall": "ts-node -P ./tsconfig.json install.ts",
     "dev": "run-p dev:*",
     "dev:runlocalizationWatcher": "ts-node node_modules/~generator/fsWatcher.ts",
     "init": "link-module-alias && ts-node node_modules/~generator/init.ts"
   },
-  "version": "1.7.12"
+  "version": "1.7.13"
 }
