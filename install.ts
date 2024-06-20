@@ -24,6 +24,8 @@ function CheckPackage() {
 	const rootPath = "../../../../";
 	const scriptPath = "./";
 
+	console.log("F: ",fs.realpathSync(rootPath + "package.json"))
+
 	// adjust existing package.json
 	if (fs.existsSync(rootPath + "package.json")) {
 		console.log("Checking existing package.json...")
