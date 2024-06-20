@@ -9,16 +9,16 @@ const generatorPath = "node_modules/~generator";
 
 console.log(fs.realpathSync(generatorPath));
 
-let watcher = watch([resourcePath + "/localization", generatorPath + "/localizationCompiler.js"], {recursive: true})
+let watcher = watch([resourcePath + "/localization", generatorPath + "/localizationCompiler.ts"], {recursive: true})
 watcher.on("change", (eventType ?: 'update' | 'remove' | undefined, filePath ?: string) => {
 	if (!filePath) return;
-	if (filePath.includes("localizationCompiler.js")) {
+	if (filePath.includes("localizationCompiler.ts")) {
 		compiler = loadCompiler();
 	}
 	let match = /(node_modules[\\/])?(.*[\/|\\](\w+)).js/g.exec(filePath);
 	if (eventType == "update" && filePath && match) {
 		const curpath = match[2];
-		const data = getDataFromFile(curpath + ".js");
+		const data = getDataFromFile(curpath + ".ts");
 		if (data) {
 			completeData[curpath] = data;
 			combineData();
