@@ -1,4 +1,4 @@
-const fs = ('fs');
+const fs = require('fs');
 import { LocalizationCompiler } from './localizationCompiler';
 const watch = require("node-watch");
 
