@@ -20,7 +20,7 @@ const aliases = [
 
 // Check package.json
 function CheckPackage() {
-	console.log("Searching for package.json...");
+	console.log("Tooltip Searching for package.json...");
 	const rootPath = "../../../";
 	const scriptPath = "./";
 
