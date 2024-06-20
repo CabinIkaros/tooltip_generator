@@ -1,6 +1,6 @@
-import * as fs from 'fs';
+const fs = require('fs');
 import { LocalizationCompiler } from './localizationCompiler';
-import { LocalizationData} from './localizationInterfaces';
+import { LocalizationData } from './localizationInterfaces';
 const watch = require("node-watch");
 
 let completeData: {[path: string]: LocalizationData} = {};
@@ -9,13 +9,13 @@ const generatorPath = "node_modules/~generator";
 
 console.log(fs.realpathSync(generatorPath));
 
-let watcher = watch([resourcePath + "/localization", generatorPath + "/localizationCompiler.ts"], {recursive: true})
+let watcher = watch([resourcePath + "/localization"], {recursive: true})
 watcher.on("change", (eventType ?: 'update' | 'remove' | undefined, filePath ?: string) => {
 	if (!filePath) return;
 	if (filePath.includes("localizationCompiler.ts")) {
 		compiler = loadCompiler();
 	}
-	let match = /(node_modules[\\/])?(.*[\/|\\](\w+)).js/g.exec(filePath);
+	let match = /(node_modules[\\/])?(.*[\/|\\](\w+)).ts/g.exec(filePath);
 	if (eventType == "update" && filePath && match) {
 		const curpath = match[2];
 		const data = getDataFromFile(curpath + ".ts");

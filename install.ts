@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as child from 'child_process';
+const fs = require('fs');
+const child = require('child_process');
 
 interface packageSnippet {
 	scripts?: {[name: string]: string};
