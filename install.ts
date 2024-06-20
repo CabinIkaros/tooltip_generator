@@ -46,7 +46,7 @@ function CheckPackage() {
 					hasDev = true;
 				}
 				if (name == "init") {
-					if (scripts[name] !== "link-module-alias && node node_modules/~generator/init.js") {
+					if (scripts[name] !== "link-module-alias && node node_modules/~generator/init.ts") {
 						console.log("\x1b[31m%s\x1b[0m", "Unexpected 'init' script in package.json!");
 						return;
 					}
@@ -121,14 +121,8 @@ function CheckPackage() {
 
 	// copy the default package.json if there wasn't any previously
 	} else {
-		const copyPackage = scriptPath + "_package.json";
-		if (fs.existsSync(copyPackage)) {
-			console.log("Copying new package.json");
-			fs.copyFileSync(copyPackage, rootPath + "package.json");
-		} else {
-			console.log("\x1b[31m%s\x1b[0m", "\nCouldn't find _package.json! Have you installed this module correctly?")
-			return;
-		}
+		console.log("\x1b[31m%s\x1b[0m", "\n项目根目录没有package.json文件")
+		return;
 	}
 	console.log("Running final installation, please wait for the success message...")
 	child.exec("yarn install", {
