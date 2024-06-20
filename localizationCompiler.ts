@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path'
+const fs = require('fs');
+const path = require('path');
 import { KVObject, serialize } from 'valve-kv'
 import { LocalizationData, AbilityLocalization, ModifierLocalization, StandardLocalization } from "./localizationInterfaces";
 import { Language } from "~resource/languages"

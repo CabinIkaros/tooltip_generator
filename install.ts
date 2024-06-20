@@ -21,7 +21,7 @@ const aliases = [
 // Check package.json
 function CheckPackage() {
 	console.log("Searching for package.json...");
-	const rootPath = "../../../";
+	const rootPath = "../../../../";
 	const scriptPath = "./";
 
 	// adjust existing package.json

@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+const fs = require('fs');
 
 function copyFiles() {
 	console.log("Copying initial files...");
