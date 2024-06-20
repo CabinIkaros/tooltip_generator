@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 import { KVObject, serialize } from 'valve-kv'
-import { LocalizationData, AbilityLocalization, ModifierLocalization, StandardLocalization } from "./localizationInterfaces";
 import { Language } from "~resource/languages"
 
 export class LocalizationCompiler

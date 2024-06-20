@@ -1,6 +1,5 @@
-const fs = require('fs');
+const fs = ('fs');
 import { LocalizationCompiler } from './localizationCompiler';
-import { LocalizationData } from './localizationInterfaces';
 const watch = require("node-watch");
 
 let completeData: {[path: string]: LocalizationData} = {};

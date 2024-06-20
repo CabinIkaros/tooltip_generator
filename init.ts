@@ -26,26 +26,16 @@ function copyFiles() {
 		// 	fs.copyFileSync(filePath, resultPath);
 		// 	console.log(`Not found, ModifierProperties.d.ts copied to ${resultPath} folder`);
 		// }
-		// filePath = __dirname + "/languages.d.ts";
-		// resultPath = resourcePath + "/languages.ts";
-		// console.log(`Checking if languages.ts exsts in ${filePath}`)
-		// if (fs.existsSync(resultPath))
-		// {
-		// 	console.log("languages.ts found!");
-		// } else {
-		// 	fs.copyFileSync(filePath, resultPath);
-		// 	console.log(`Not found, languages.ts copied to ${resultPath} folder`);
-		// }
-		// filePath = __dirname + "/languages.ts";
-		// resultPath = resourcePath + "/languages.ts";
-		// console.log(`Checking if languages.js exsts in ${filePath}`)
-		// if (fs.existsSync(resultPath))
-		// {
-		// 	console.log("languages.js found!");
-		// } else {
-		// 	fs.copyFileSync(filePath, resultPath);
-		// 	console.log(`Not found, languages.js copied to ${resultPath} folder`);
-		// }
+		filePath = __dirname + "/languages.ts";
+		resultPath = resourcePath + "/languages.ts";
+		console.log(`Checking if languages.ts exsts in ${filePath}`)
+		if (fs.existsSync(resultPath))
+		{
+			console.log("languages.ts found!");
+		} else {
+			fs.copyFileSync(filePath, resultPath);
+			console.log(`Not found, languages.ts copied to ${resultPath} folder`);
+		}
 	}
 
 	let dirPath = __dirname + "/localization";
