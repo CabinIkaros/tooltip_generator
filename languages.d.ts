@@ -1,4 +1,4 @@
-export enum Language
+declare const enum Language
 {
     None = 'none',
     // Brazilian = 'brazilian',    

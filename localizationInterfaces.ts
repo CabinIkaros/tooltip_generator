@@ -1,6 +1,4 @@
-import { Language } from "./languages";
-
-export interface AbilityLocalization
+declare interface AbilityLocalization
 {
     ability_classname: string;
     name?: string;
@@ -14,7 +12,7 @@ export interface AbilityLocalization
     language_overrides?: Array<AbilityLocalizationContent>;
 }
 
-export interface AbilityLocalizationContent
+declare interface AbilityLocalizationContent
 {
     language: Language;
     name_override?: string;
@@ -27,7 +25,7 @@ export interface AbilityLocalizationContent
     ability_specials_override?: Array<AbilitySpecialLocalization>;
 }
 
-export interface ModifierLocalization
+declare interface ModifierLocalization
 {
     modifier_classname: string;
     name?: string;
@@ -35,21 +33,21 @@ export interface ModifierLocalization
     language_overrides?: Array<ModifierLocalizationContent>;
 }
 
-export interface ModifierLocalizationContent
+declare interface ModifierLocalizationContent
 {
     language: Language;
     name_override?: string
     description_override?: string;
 }
 
-export interface StandardLocalization
+declare interface StandardLocalization
 {
     classname: string;
     name: string;
     language_overrides?: StandardLocalizationNameOverride[]
 }
 
-export interface StandardLocalizationNameOverride
+declare interface StandardLocalizationNameOverride
 {
     language: Language;
     name_override: string
@@ -61,7 +59,7 @@ export interface StandardLocalizationNameOverride
 //     description: string;
 // }
 
-export interface AbilitySpecialLocalization
+declare interface AbilitySpecialLocalization
 {
     ability_special: string;
     text: string;
@@ -91,7 +89,7 @@ export interface AbilitySpecialLocalization
 //     lore_override?: string;
 // }
 
-export interface LocalizationData
+declare interface LocalizationData
 {
     AbilityArray?: Array<AbilityLocalization>;
     ModifierArray?: Array<ModifierLocalization>;
