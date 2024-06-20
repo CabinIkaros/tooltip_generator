@@ -10,14 +10,12 @@ interface packageSnippet {
 
 // define package insertions
 const devScripts = [
-	["dev:localizationCompiler", "tsc --project node_modules/~resource/tsconfig.json"],
-	["dev:localizationCompilerWatcher", "tsc --project node_modules/~resource/tsconfig.json --watch"],
-	["dev:runlocalizationWatcher", "node node_modules/~generator/fsWatcher.js"]
+	["dev:runlocalizationWatcher", "ts-node node_modules/~generator/fsWatcher.ts"]
 ]
-const initSCript = ["init", "link-module-alias && node node_modules/~generator/init.js"]
+const initSCript = ["init", "link-module-alias && ts-node node_modules/~generator/init.ts"]
 const aliases = [
 	["~resource", "resource"],
-	["~generator", "node_modules/@shushishtok/tooltip_generator"]
+	["~generator", "node_modules/@cabin-icarus/tooltip_generator"]
 ]
 
 // Check package.json
@@ -63,7 +61,7 @@ function CheckPackage() {
 			goalPackage.scripts[name] = cmd;
 		}
 		if (!hasInit) {
-			goalPackage.scripts["init"] = "link-module-alias && node node_modules/~generator/init.js";
+			goalPackage.scripts["init"] = "link-module-alias && ts-node node_modules/~generator/init.ts";
 		}
 
 		// check module aliases
@@ -85,7 +83,7 @@ function CheckPackage() {
 			goalPackage._moduleAliases["~resource"] = "resource";
 		}
 		if (!hasGenerator) {
-			goalPackage._moduleAliases["~generator"] = "node_modules/@shushishtok/tooltip_generator";
+			goalPackage._moduleAliases["~generator"] = "node_modules/@cabin-icarus/tooltip_generator";
 		}
 
 		const origPackagePath = scriptPath + "package.json";
@@ -99,7 +97,7 @@ function CheckPackage() {
 			if (!goalPackage.devDependencies) {
 				goalPackage.devDependencies = {};
 			}
-			origPackage.dependencies!["@shushishtok/tooltip_generator"] = "latest"
+			origPackage.dependencies!["@cabin-icarus/tooltip_generator"] = "latest"
 
 			for (const name in origPackage.devDependencies!) {
 				if (!goalPackage.devDependencies.hasOwnProperty(name) && !goalPackage.dependencies.hasOwnProperty(name)) {
