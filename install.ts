@@ -21,7 +21,7 @@ const aliases = [
 // Check package.json
 function CheckPackage() {
 	console.log("Searching for package.json...");
-	const rootPath = "../../../../";
+	const rootPath = "../../../";
 	const scriptPath = "./";
 
 	console.log("F: ",fs.realpathSync(rootPath + "package.json"))
@@ -143,6 +143,6 @@ function CheckPackage() {
 	})
 }
 
-console.log("F: ",fs.realpathSync("../../../../package.json"))
+console.log("F: ",fs.realpathSync("../../../package.json"))
 
 CheckPackage();

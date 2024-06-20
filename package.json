@@ -45,5 +45,5 @@
     "dev:runlocalizationWatcher": "ts-node node_modules/~generator/fsWatcher.ts",
     "init": "link-module-alias && ts-node node_modules/~generator/init.ts"
   },
-  "version": "1.7.5"
+  "version": "1.7.6"
 }
