@@ -129,7 +129,7 @@ function CheckPackage() {
 		}
 	}
 	console.log("Running final installation, please wait for the success message...")
-	child.exec("npm install", {
+	child.exec("yarn install", {
 		cwd: rootPath,
 	}, (err, stdout) => {
 		if (err) {
