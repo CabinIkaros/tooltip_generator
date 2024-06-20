@@ -3,7 +3,7 @@
     "name": "Shush"
   },
   "bugs": {
-    "url": "https://github.com/Shushishtok/tooltip_generator/issues"
+    "url": "https://github.com/CabinIkaros/tooltip_generator/issues"
   },
   "bundleDependencies": false,
   "dependencies": {
@@ -18,9 +18,10 @@
   "devDependencies": {
     "@types/node": "^14.14.22",
     "fs-extra": "^9.1.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "node-xlsx": "^0.23.0"
   },
-  "homepage": "https://github.com/Shushishtok/tooltip_generator#readme",
+  "homepage": "https://github.com/CabinIkaros/tooltip_generator#readme",
   "keywords": [
     "Dota",
     "Custom",
@@ -29,18 +30,17 @@
     "Generator"
   ],
   "license": "ISC",
-  "name": "@shushishtok/tooltip_generator",
+  "name": "@cabin-icarus/tooltip_generator",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Shushishtok/tooltip_generator.git"
+    "url": "git+https://github.com/CabinIkaros/tooltip_generator.git"
   },
   "_moduleAliases": {
     "~resource": "resource",
-    "~generator": "node_modules/@shushishtok/tooltip_generator"
+    "~generator": "node_modules/@cabin-icarus/tooltip_generator"
   },
   "scripts": {
     "postinstall": "ts-node install.ts",
-    "build": "run-p build:*",
     "dev": "run-p dev:*",
     "dev:runlocalizationWatcher": "ts-node node_modules/~generator/fsWatcher.ts",
     "init": "link-module-alias && ts-node node_modules/~generator/init.ts"
