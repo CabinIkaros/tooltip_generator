@@ -41,8 +41,8 @@
   },
   "scripts": {
     "dev": "run-p dev:*",
-    "dev:runlocalizationWatcher": "ts-node node_modules/~generator/fsWatcher.ts",
+    "dev:runlocalizationWatcher": "ts-node -P node_modules/~resource/tsconfig.json node_modules/~generator/fsWatcher.ts",
     "init": "link-module-alias && ts-node node_modules/~generator/init.ts"
   },
-  "version": "1.7.15"
+  "version": "1.8.0"
 }

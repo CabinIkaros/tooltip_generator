@@ -10,7 +10,7 @@ interface packageSnippet {
 
 // define package insertions
 const devScripts = [
-	["dev:runlocalizationWatcher", "ts-node node_modules/~generator/fsWatcher.ts"]
+	["dev:runlocalizationWatcher", "ts-node -P node_modules/~resource/tsconfig.json node_modules/~generator/fsWatcher.ts"]
 ]
 const initSCript = ["init", "link-module-alias && ts-node node_modules/~generator/init.ts"]
 const aliases = [
