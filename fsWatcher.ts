@@ -39,6 +39,18 @@ watcher.on("error", (error: Error) => {
 
 watcher.on("ready", () => {
     console.log("\x1b[32m%s\x1b[0m", "Ready!");
+
+    const files = __getAllFiles(folderPath);
+
+    Promise.all(files.map(x =>
+        {
+            const temp = fs.readFileSync(x);
+            fs.writeFile(x, ' ', err =>
+            {
+                fs.writeFileSync(x, temp);
+            });
+        }
+    ))
 })
 
 let compiler = loadCompiler();
@@ -88,15 +100,3 @@ const __getAllFiles = (dirPath: string, arrayOfFiles?: string[]) =>
 
     return arrayOfFiles
 }
-
-const files = __getAllFiles(folderPath);
-
-Promise.all(files.map(x =>
-{
-    const temp = fs.readFileSync(x);
-    fs.writeFile(x, ' ', err =>
-    {
-        fs.writeFileSync(x, temp);
-    });
-}
-))
