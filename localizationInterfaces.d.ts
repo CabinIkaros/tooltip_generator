@@ -99,6 +99,7 @@ declare global
         AbilityArray?: Array<AbilityLocalization>;
         ModifierArray?: Array<ModifierLocalization>;
         StandardArray?: Array<StandardLocalization>;
+        Include?:Map<Language, string[]>;
         //TalentArray?: Array<HeroTalents>;
     }
 

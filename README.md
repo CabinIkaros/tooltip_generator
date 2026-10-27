@@ -37,3 +37,42 @@ To test: in the resource folder, go to `resource/localization`, open `localizati
 ```
 * Save as any name like `dota_ts.sublime-build`
 * Have `fsWatcher.ts` or `package.json` or any other file from the project open -> press Ctrl + Shift + B -> select `dota_ts` -> console opens and it is run, is closed with esc, will still continue to compile everything until sublime is closed.
+
+
+## Include use
+```ts
+Folder Tree
+- resource/langs/addon_schinese.txt     kv: "hello" "hello china！"
+- resource/langs/addon_english.txt      kv: "hello" "hello english!"
+- resource/langs/addon_russian.txt      kv: "hello" "hello russian!"
+
+
+
+export function GenerateLocalizationData(): LocalizationData
+{
+    const info: LocalizationData =
+    {
+        Include:new Map()
+    };
+    
+    
+    info.Include.set(Language.Schinese, [
+        "langs/addon_schinese.txt",
+    ])
+
+    info.Include.set(Language.English, [
+        "langs/addon_english.txt",
+    ])
+
+    info.Include.set(Language.Russian, [
+        "langs/addon_russian.txt",
+    ])
+    
+    return info
+}
+
+out file:
+- resource/addon_schinese.txt   kv: "hello" "hello china！"
+- resource/addon_english.txt    kv: "hello" "hello english!"
+- resource/addon_russian.txt    kv: "hello" "hello russian!"
+```

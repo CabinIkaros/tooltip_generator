@@ -1,11 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-import { KVObject, serialize } from 'valve-kv'
+import { KVObject, serialize,deserializeFile } from 'valve-kv'
 import { Language } from "~resource/languages"
 
 export class LocalizationCompiler
 {
-	addon_filepath: string = path.join("node_modules/~resource", "addon_");
+	folderPath: string = path.join("node_modules/~resource");
+	addon_filepath: string = path.join(this.folderPath, "addon_");
 	filepath_format: string = ".txt";
 	currentWrites: Set<string> = new Set();
 	writeTimeout?: NodeJS.Timeout;
@@ -29,7 +30,7 @@ export class LocalizationCompiler
 			text = text.replace(/\{(\w*)}($|[^%])/g, "%$1%$2")
 			text = text.replace(/\{(\w*)}%/g, "%$1%%%");
 			text = text.replace(/%\{(\w*)}/g, "%%%$1%");
-			
+
 			return text;
 		}
 	}
@@ -43,12 +44,14 @@ export class LocalizationCompiler
 		//let Talents: Array<HeroTalents> = new Array<HeroTalents>();
 
 		const localization_info: LocalizationData =
-		{
-			AbilityArray: Abilities,
-			ModifierArray: Modifiers,
-			StandardArray: StandardTooltips,
-			// TalentArray: Talents,
-		};
+				  {
+					  AbilityArray: Abilities,
+					  ModifierArray: Modifiers,
+					  StandardArray: StandardTooltips,
+					  // TalentArray: Talents,
+				  };
+
+		const refMap: Map<Language, string[]> = new Map<Language, string[]>();
 
 		for (const [key, data] of Object.entries(allData)) {
 			if (data.AbilityArray) {
@@ -60,16 +63,29 @@ export class LocalizationCompiler
 			if (data.StandardArray) {
 				Array.prototype.push.apply(StandardTooltips, data.StandardArray);
 			}
+			if (data.Include)
+			{
+				for (const [lang, includes] of data.Include.entries())
+				{
+					if (!refMap.has(lang)) {
+						refMap.set(lang, []);
+					}
+					const existingIncludes = refMap.get(lang);
+					if (existingIncludes) {
+						existingIncludes.push(...includes);
+					}
+				}
+			}
 		}
 
 		// Generate information for every language
 		const languages = Object.values(Language).filter(v => typeof v !== "number");
 		for (const language of languages)
-		{            
+		{
 			if (language !== Language.None)
 			{
 				const tokens: KVObject = this.GenerateContentStringForLanguage(language, localization_info);
-				this.WriteContentToAddonFile(language, tokens);
+				this.WriteContentToAddonFile(language, tokens, refMap.get(language));
 			}
 		}
 	}
@@ -96,7 +112,7 @@ export class LocalizationCompiler
 					}
 				}
 
-				tokens[standardLocalization.classname] = standard_tooltip_string;                
+				tokens[standardLocalization.classname] = standard_tooltip_string;
 			}
 		}
 
@@ -138,7 +154,7 @@ export class LocalizationCompiler
 							// Check for reimagined effect overrides
 							//if (language_override.reimagined_effects_override)
 							//{
-								//reimagined_effects = language_override.reimagined_effects_override;
+							//reimagined_effects = language_override.reimagined_effects_override;
 							//}
 
 							// Check for lore override
@@ -178,20 +194,20 @@ export class LocalizationCompiler
 				if (ability_name)
 				{
 					tokens[ability_string] = ability_name;
-				}                
+				}
 
 				// Add description localization
 				if (ability_description)
 				{
 					ability_description = this.TransformForLocalization(ability_description, false);
 					tokens[`${ability_string}_description`] = ability_description;
-				}                
+				}
 
 				// Lore, if any
 				if (ability_lore)
 				{
 					const transformed_lore = this.TransformForLocalization(ability_lore, false);
-					tokens[`${ability_string}_Lore`] = transformed_lore;                    
+					tokens[`${ability_string}_Lore`] = transformed_lore;
 				}
 
 				// Notes, if any
@@ -201,7 +217,7 @@ export class LocalizationCompiler
 					for (const note of ability_notes)
 					{
 						const transformed_note = this.TransformForLocalization(note, false);
-						tokens[`${ability_string}_Note${counter}`] = transformed_note;                        
+						tokens[`${ability_string}_Note${counter}`] = transformed_note;
 
 						counter++;
 					}
@@ -211,14 +227,14 @@ export class LocalizationCompiler
 				if (scepter_description)
 				{
 					const ability_scepter_description = this.TransformForLocalization(scepter_description, false);
-					tokens[`${ability_string}_scepter_description`] = ability_scepter_description;                    
+					tokens[`${ability_string}_scepter_description`] = ability_scepter_description;
 				}
 
 				// Shard, if any
 				if (shard_description)
 				{
 					const ability_shard_description = this.TransformForLocalization(shard_description, false);
-					tokens[`${ability_string}_shard_description`] = ability_shard_description;                    
+					tokens[`${ability_string}_shard_description`] = ability_shard_description;
 				}
 
 				// Ability specials, if any
@@ -240,7 +256,7 @@ export class LocalizationCompiler
 
 						ability_special_text += ability_special.text;
 
-						tokens[`${ability_string}_${ability_special.ability_special}`] = ability_special_text;                        
+						tokens[`${ability_string}_${ability_special.ability_special}`] = ability_special_text;
 					}
 				}
 			}
@@ -281,27 +297,45 @@ export class LocalizationCompiler
 				if (modifier_name)
 				{
 					tokens[modifier_string] = modifier_name;
-				}                
+				}
 
 				// Add description to localization string
 				if (modifier_description)
 				{
 					modifier_description = this.TransformForLocalization(modifier_description, true);
 					tokens[`${modifier_string}_description`] = modifier_description;
-				}                
+				}
 			}
 		}
 
 		return tokens;
 	}
 
-	WriteContentToAddonFile(language: string, tokens: KVObject)
+	WriteContentToAddonFile(language: string, tokens: KVObject, includes: string[] | undefined)
 	{
 		// Set based on language
 		const filepath = this.addon_filepath + language.toString() + this.filepath_format;
 
 		// Add the opening tokens        
 		const kv = {lang: { Language: language, Tokens: tokens}}
+
+		if (includes && includes.length > 0)
+		{
+			for(const include of includes)
+			{
+				try {
+					const itemData = deserializeFile(path.join(this.folderPath, include), "utf-8");
+					if (itemData && itemData.lang && itemData.lang.Tokens)
+					{
+						Object.assign(kv.lang.Tokens, itemData.lang.Tokens);
+					}
+				}
+				catch (e) 
+				{
+					console.warn(`${include} file processing failed, please check whether the file encoding is utf-8 errorMsg:${e}`)
+				}
+			}
+		}
 
 		// Serialize!        
 		let write_string = serialize(kv);
