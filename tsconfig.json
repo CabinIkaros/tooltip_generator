@@ -1,7 +1,4 @@
 {
-  "include": [
-    "../../shared/**/*",
-  ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
@@ -70,11 +67,7 @@
     "skipDefaultLibCheck":true,
     "forceConsistentCasingInFileNames": true,  /* Disallow inconsistently-cased references to the same file. */
     "types": [
-      "@types/node"
-    ]
+        "@types/node"
+    ],
   },
-  "ts-node": {
-    "files": true,
-    "transpileOnly": true
-  }
 }

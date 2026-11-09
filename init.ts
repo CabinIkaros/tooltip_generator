@@ -3,10 +3,10 @@ const fs = require('fs');
 function copyFiles() {
 	console.log("Copying initial files...");
 	const resourcePath = "node_modules/~resource";
-	let filePath = __dirname + "/tsconfig.json";
+	let filePath = __dirname + "/tsconfig_re.json";
 	if (fs.existsSync(resourcePath))
 	{
-		filePath = __dirname + "/tsconfig.json";
+		filePath = __dirname + "/tsconfig_re.json";
 		let resultPath = resourcePath + "/tsconfig.json";
 		console.log(`Checking if tsconfig.json exists in ${filePath}`)
 		if (fs.existsSync(resultPath))
