@@ -44,11 +44,7 @@ watcher.on("ready", () => {
 
     Promise.all(files.map(x =>
         {
-            const temp = fs.readFileSync(x);
-            fs.writeFile(x, ' ', err =>
-            {
-                fs.writeFileSync(x, temp);
-            });
+            watcher.emit("change", "update", x);
         }
     ))
 })
@@ -60,11 +56,20 @@ function getDataFromFile(filePath: string): LocalizationData | undefined {
         return;
     }
     delete require.cache[require.resolve(filePath)]
-    let file = require(filePath);
-    if (file["GenerateLocalizationData"]) {
-        const localizationArr: LocalizationData = file["GenerateLocalizationData"]();
-        return localizationArr;
+    try
+    {
+        let file = require(filePath);
+        if (file["GenerateLocalizationData"]) {
+            const localizationArr: LocalizationData = file["GenerateLocalizationData"]();
+            return localizationArr;
+        }
     }
+    catch (error) 
+    {
+        console.error("[Language] Error occurred while reading file:", filePath);
+        console.error(error);
+    }
+
     return;
 }
 

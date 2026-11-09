@@ -44,12 +44,12 @@ export class LocalizationCompiler
 		//let Talents: Array<HeroTalents> = new Array<HeroTalents>();
 
 		const localization_info: LocalizationData =
-				  {
-					  AbilityArray: Abilities,
-					  ModifierArray: Modifiers,
-					  StandardArray: StandardTooltips,
-					  // TalentArray: Talents,
-				  };
+		{
+			AbilityArray: Abilities,
+			ModifierArray: Modifiers,
+			StandardArray: StandardTooltips,
+			// TalentArray: Talents,
+		};
 
 		const refMap: Map<Language, string[]> = new Map<Language, string[]>();
 
